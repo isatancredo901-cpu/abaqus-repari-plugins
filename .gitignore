@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+
+# Abaqus generated/runtime files
+*.rpy
+*.jnl
+*.log
+*.msg
+*.sta
+*.sim
+*.odb
+*.lck
+*.dat
+*.com
+*.prt
+
+# Local editor/system files
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
