@@ -1,5 +1,6 @@
 
 #-*- coding: utf-8 -*-
+import importlib
 from abaqusGui import *
 import testDB
 # Note: The above form of the import statement is used for the prototype
@@ -104,7 +105,7 @@ class TestForm(AFXForm):
         # Reload the dialog module so that any changes to the dialog 
         # are updated.
         #
-        reload(testDB)
+        importlib.reload(testDB)
         return testDB.TestDB(self)
     
     
