@@ -472,11 +472,12 @@ class TestDB(AFXDataDialog):
  
     def omCmdParseODB(self, sender, sel, ptr):
         self.form.cmdType.setValue("parseODB")
-        # self.form.issueCommands() 
+        self.form.issueCommands()
         self.form.showMessage("parseod")
-        data = np.loadtxt("Force.txt")
-        ##################
-        data = np.loadtxt("Force.txt")
+        if not os.path.exists("Force.txt"):
+            self.form.showMessage("Force.txt not found. Please run post-processing again after ODB parsing finishes.")
+            return
+        data = np.atleast_2d(np.loadtxt("Force.txt"))
         forces = data[:, 1]
         max_force = np.max(forces)
         ###################

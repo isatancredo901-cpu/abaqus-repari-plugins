@@ -12,9 +12,9 @@ import numpy as np
 ############
 
 #################
-jobName = 'Job-dbg'
+modelData = globals().get("modelData", {})
+odbName = modelData.get('mOdbFileKw') or (modelData.get('jobName', 'Job-1') + '.odb')
 #################
-odbName = jobName + '.odb'
 
 # odbName = r"C:\Users\Binz\Desktop\2026-3-4-pygui-plugin-7000-7days\Temp\ABQPlugin\Well-Analysis.odb"
 odb = session.openOdb(

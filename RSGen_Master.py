@@ -65,6 +65,7 @@ def updateModel():
     # globals()["modelData"] = modelData
     ##################
     TYPE = modelData['modify']['type']
+    globals()["TYPE"] = TYPE
     if(TYPE == 0):
         exec_script(os.path.join(pluginDir, "scripts", "partGenTP.py"))
     elif(TYPE==1):
@@ -93,6 +94,12 @@ def submitJob():
     return
 
 
+def applyBC():
+    pluginDir = modelData['pluginDir']
+    exec_script(os.path.join(pluginDir, "scripts", "applyBC.py"))
+    return
+
+
 def string2list(string):
     return [float(i) for i in string.split("/")]
 
@@ -109,6 +116,7 @@ def execute(pluginDir='C:\\Users\\Binz\\Desktop\\Undelivered _pro\\prototypeApp'
     "disValue":disValue,
     "pluginDir":pluginDir,
     "jobName":jobName,
+    "mOdbFileKw":mOdbFileKw,
     "length":mLength,
     "height":mWidth,
     "depth":mHeight, #全部厚度
@@ -179,6 +187,10 @@ def execute(pluginDir='C:\\Users\\Binz\\Desktop\\Undelivered _pro\\prototypeApp'
     elif(cmdType=='submitJob'):
         submitJob()
     elif(cmdType=='parseODB'):
+        parseODB()
+    elif(cmdType=='applyBC'):
+        applyBC()
+    elif(cmdType=='postProcess'):
         parseODB()
     return
 
