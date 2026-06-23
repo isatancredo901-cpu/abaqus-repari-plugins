@@ -10,6 +10,14 @@ from caeModules import *
 from driverUtils import executeOnCaeStartup
 executeOnCaeStartup()
 
+
+def exec_script(path, namespace=None):
+    if namespace is None:
+        namespace = globals()
+    with open(path, 'r', encoding='utf-8') as script_file:
+        code = compile(script_file.read(), path, 'exec')
+    exec(code, namespace)
+
 #
 Mdb()
 #######设置相关模型参数
@@ -67,14 +75,11 @@ globals()["modelData"] = modelData
 ##################
 TYPE = modelData['modify']['type']
 if(TYPE == 0):
-    execfile('C:/Users/Binz/Desktop/Running/opt-1/code/partGenTP.py',
-        __main__.__dict__)
+    exec_script('C:/Users/Binz/Desktop/Running/opt-1/code/partGenTP.py')
 elif(TYPE==1):
-    execfile('C:/Users/Binz/Desktop/Running/opt-1/code/partGenXJ.py',
-             __main__.__dict__)
+    exec_script('C:/Users/Binz/Desktop/Running/opt-1/code/partGenXJ.py')
 elif(TYPE == 2):
-    execfile('C:/Users/Binz/Desktop/Running/opt-1/code/partGenJT.py',
-             __main__.__dict__)
+    exec_script('C:/Users/Binz/Desktop/Running/opt-1/code/partGenJT.py')
 
 #####################
 #####################创建材料参数

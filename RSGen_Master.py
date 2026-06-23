@@ -13,6 +13,14 @@ from caeModules import *
 from driverUtils import executeOnCaeStartup
 executeOnCaeStartup()
 import json
+
+
+def exec_script(path, namespace=None):
+    if namespace is None:
+        namespace = globals()
+    with open(path, 'r', encoding='utf-8') as script_file:
+        code = compile(script_file.read(), path, 'exec')
+    exec(code, namespace)
 #########
 
 ############主函数
@@ -46,7 +54,7 @@ def updateMaterial():
 
 def parseODB():
     pluginDir = modelData['pluginDir']
-    execfile(os.path.join(pluginDir,"scripts//parseOdb.py"))
+    exec_script(os.path.join(pluginDir, "scripts", "parseOdb.py"))
     return
 
 
@@ -58,13 +66,13 @@ def updateModel():
     ##################
     TYPE = modelData['modify']['type']
     if(TYPE == 0):
-        execfile(os.path.join(pluginDir,"scripts//partGenTP.py"))
+        exec_script(os.path.join(pluginDir, "scripts", "partGenTP.py"))
     elif(TYPE==1):
-        execfile(os.path.join(pluginDir,"scripts//partGenJT.py"))
+        exec_script(os.path.join(pluginDir, "scripts", "partGenJT.py"))
     elif(TYPE == 2):
-        execfile(os.path.join(pluginDir,"scripts//partGenXJ.py"))
+        exec_script(os.path.join(pluginDir, "scripts", "partGenXJ.py"))
     #
-    execfile(os.path.join(pluginDir,"scripts//genModel.py"))
+    exec_script(os.path.join(pluginDir, "scripts", "genModel.py"))
     return
 
 
@@ -73,7 +81,7 @@ def updateModel():
 def updateMaterial():
     #####################创建材料参数
     pluginDir = modelData['pluginDir']
-    execfile(os.path.join(pluginDir,"scripts//updateMaterial.py"))
+    exec_script(os.path.join(pluginDir, "scripts", "updateMaterial.py"))
     return
 def updateBcCondition():
     updateModel()
@@ -81,7 +89,7 @@ def updateBcCondition():
 
 def submitJob():
     pluginDir = modelData['pluginDir']
-    execfile(os.path.join(pluginDir,"scripts//submitJob.py"))
+    exec_script(os.path.join(pluginDir, "scripts", "submitJob.py"))
     return
 
 

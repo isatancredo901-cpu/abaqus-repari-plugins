@@ -10,7 +10,9 @@ thisPath = os.path.abspath(__file__)
 thisDir = os.path.dirname(thisPath)
 
 def TEXT(s = "测试"):
-    return s.decode('utf-8').encode('gbk')
+    if isinstance(s, bytes):
+        return s.decode('utf-8')
+    return s
   
 
 class TestDB(AFXDataDialog):

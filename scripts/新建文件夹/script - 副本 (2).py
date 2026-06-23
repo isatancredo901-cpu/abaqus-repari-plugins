@@ -10,6 +10,14 @@ from caeModules import *
 from driverUtils import executeOnCaeStartup
 executeOnCaeStartup()
 
+
+def exec_script(path, namespace=None):
+    if namespace is None:
+        namespace = globals()
+    with open(path, 'r', encoding='utf-8') as script_file:
+        code = compile(script_file.read(), path, 'exec')
+    exec(code, namespace)
+
 #
 Mdb()
 #######设置相关模型参数
@@ -68,8 +76,7 @@ jobName = modelData['jobName']
 globals()["modelData"] = modelData
 ##################
 if(modelData['modify']['type'] == 0):
-    execfile('C:/Users/Binz/Desktop/Running/opt-1/code/partGenTP.py',
-        __main__.__dict__)
+    exec_script('C:/Users/Binz/Desktop/Running/opt-1/code/partGenTP.py')
 #####################
 #####################创建材料参数
 matDict = modelData["material"]
