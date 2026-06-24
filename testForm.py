@@ -42,7 +42,7 @@ class TestForm(AFXForm):
         # self.mLayerThichness = AFXFloatKeyword(self.cmd, 'mLayerThichness', TRUE, 0.125, 8)
         self.mThickness = AFXFloatKeyword(self.cmd, 'mThickness', TRUE, 0.125, 8)
         self.mNumLayer = AFXIntKeyword(self.cmd, 'mNumLayer', TRUE,32)
-        self.mLayerAngle = AFXStringKeyword(self.cmd, 'mLayerAngle', TRUE, '45/0/45/90/45/0/45/90/45/0/45/90/45/0/45/90/90/-45/0/45/90/-45/0/45/90/-45/0/45/90/-45/0/45')
+        self.mLayerAngle = AFXStringKeyword(self.cmd, 'mLayerAngle', TRUE, '45/0/-45/90/45/0/-45/90/45/0/-45/90/45/0/-45/90/90/-45/0/45/90/-45/0/45/90/-45/0/45/90/-45/0/45')
         self.mPitDiameter = AFXFloatKeyword(self.cmd, 'mPitDiameter', TRUE, 10, 8)
         ########材料文件参数
         self.mMaterialFileKw = AFXStringKeyword(self.cmd, 'mMaterialFileKw', TRUE, '')
@@ -54,7 +54,7 @@ class TestForm(AFXForm):
         self.tbHeight = AFXFloatKeyword(self.cmd, 'tbHeight', TRUE, 20, 8)
         self.tbLayerNum = AFXIntKeyword(self.cmd, 'tbLayerNum', TRUE, 8)
         self.tbLayerAngle = AFXStringKeyword(self.cmd, 'tbLayerAngle', TRUE, '45/0/-45/90/90/-45/0/45')
-        self.glueThickness = AFXFloatKeyword(self.cmd, 'glueThickness', TRUE, 0.1, 8)
+        self.glueThickness = AFXFloatKeyword(self.cmd, 'glueThickness', TRUE, 0.00001, 8)
         #阶梯
         self.jtNum = AFXIntKeyword(self.cmd, 'jtNum', TRUE, 4)
         #斜接
