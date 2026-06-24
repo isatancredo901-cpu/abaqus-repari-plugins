@@ -294,23 +294,70 @@ mdb.models['Model-1'].DisplacementBC(name='BC-right', createStepName='Step-1',
     localCsys=None)
 
 ####mesh
+MASTER_X_EDGES = [
+    -75.0, -62.1788292, -51.9911613, -43.8960686, -37.463726,
+    -32.3526039, -28.2913189, -25.0642338, -22.5,
+    -21.0, -19.5, -18.0, -16.5, -15.0, -13.5, -12.0, -10.5,
+    -9.0, -7.5, -6.0, -4.5, -3.0, -1.5, 0.0, 1.5, 3.0,
+    4.5, 6.0, 7.5, 9.0, 10.5, 12.0, 13.5, 15.0, 16.5,
+    18.0, 19.5, 21.0, 22.5, 25.0642338, 28.2913189,
+    32.3526039, 37.463726, 43.8960686, 51.9911613, 62.1788292,
+    75.0,
+]
+MASTER_Y_EDGES = [
+    50.0, 43.1177254, 37.3624153, 32.54953, 28.5247498,
+    25.1590233, 22.3444328, 19.9907265, 18.022438, 16.3764553,
+    15.0, 14.0, 13.0, 12.0, 11.0, 10.0, 9.0, 8.0, 7.0, 6.0,
+    5.0, 4.0, 3.0, 2.0, 1.0, 0.0, -1.0, -2.0, -3.0, -4.0,
+    -5.0, -6.0, -7.0, -8.0, -9.0, -10.0, -11.0, -12.0, -13.0,
+    -14.0, -15.0, -16.3764553, -18.022438, -19.9907265,
+    -22.3444328, -25.1590233, -28.5247498, -32.54953,
+    -37.3624153, -43.1177254, -50.0,
+]
+
+
+def scaled_master_edges(edges, current_size, master_size):
+    scale = current_size / master_size
+    return [edge * scale for edge in edges]
+
+
+def partition_by_x_plane(part, x_value):
+    try:
+        part.PartitionCellByPlaneThreePoints(
+            cells=part.cells,
+            point1=(x_value, 0, 0),
+            point2=(x_value, 0, 1),
+            point3=(x_value, 1, 0))
+    except Exception:
+        pass
+
+
+def partition_by_y_plane(part, y_value):
+    try:
+        part.PartitionCellByPlaneThreePoints(
+            cells=part.cells,
+            point1=(0, y_value, 0),
+            point2=(0, y_value, 1),
+            point3=(1, y_value, 0))
+    except Exception:
+        pass
+
+
 p = mdb.models['Model-1'].parts['Part-model']
-p.PartitionCellByPlaneThreePoints(cells=p.cells,
-                                    point1=(0, 0, 0),
-                                    point2=(0,0,1),
-                                    point3=(0,1,0))
-#
-p.PartitionCellByPlaneThreePoints(cells=p.cells,
-                                    point1=(0,0,0),
-                                    point2=(0,0,1),
-                                    point3=(1,0,0))
+for x_value in scaled_master_edges(MASTER_X_EDGES[1:-1], Length, 150.0):
+    partition_by_x_plane(p, x_value)
+for y_value in scaled_master_edges(MASTER_Y_EDGES[1:-1], Height, 100.0):
+    partition_by_y_plane(p, y_value)
 ############
 p = mdb.models['Model-1'].parts['Part-model']
-p.seedPart(size=4.0, deviationFactor=0.1, minSizeFactor=0.1)
+p.seedEdgeByNumber(edges=p.edges, number=1)
 c = p.cells
 pickedRegions = c
-# p.setMeshControls(regions=pickedRegions, technique=SWEEP,
-#     algorithm=MEDIAL_AXIS)
+try:
+    p.setMeshControls(regions=pickedRegions, technique=SWEEP,
+        algorithm=MEDIAL_AXIS)
+except Exception:
+    pass
 p.generateMesh()
 #####################
 elemType1 = mesh.ElemType(elemCode=COH3D8, elemLibrary=STANDARD)
