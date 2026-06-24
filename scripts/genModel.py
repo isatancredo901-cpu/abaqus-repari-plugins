@@ -363,13 +363,13 @@ mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(variables=(
     'S', 'SVAVG', 'PE', 'PEVAVG', 'PEEQ', 'PEEQVAVG', 'LE', 'U', 'V', 'A', 
     'RF', 'CSTRESS', 'EVF', 'SDV'))
 mdb.models['Model-1'].fieldOutputRequests['F-Output-1'].setValues(
-    timeInterval=EVERY_TIME_INCREMENT)
+    numIntervals=200)
 ##############
 session.viewports['Viewport: 1'].assemblyDisplay.setValues(step='Step-1')
 regionDef=mdb.models['Model-1'].rootAssembly.sets['Set-res']
 mdb.models['Model-1'].HistoryOutputRequest(name='H-Output-2', 
     createStepName='Step-1', variables=('U1', 'U2', 'U3', 'RF1', 'RF2', 'RF3'), 
-    frequency=1, region=regionDef, sectionPoints=DEFAULT, rebar=EXCLUDE)
+    numIntervals=200, region=regionDef, sectionPoints=DEFAULT, rebar=EXCLUDE)
 ###########
 ####################
 ###for debug
